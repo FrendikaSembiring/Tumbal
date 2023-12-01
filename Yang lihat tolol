@@ -1,1 +1,46 @@
-Bodoh
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(title: const Text("Contact")),
+    body: _contacts != null && _contacts!.isNotEmpty
+        ? ListView.builder(
+            itemCount: _contacts!.length,
+            itemBuilder: (BuildContext context, int index) {
+              Contact? contact = _contacts![index];
+              return ListTile(
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 2, horizontal: 18),
+                leading: (contact?.avatar != null &&
+                        contact.avatar!.isNotEmpty)
+                    ? CircleAvatar(
+                        backgroundImage: MemoryImage(contact.avatar!),
+                      )
+                    : CircleAvatar(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        child: Text(contact!.initials()),
+                      ),
+                title: Text(contact.displayName ?? ''),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      contact.phones?.isNotEmpty == true
+                          ? contact.phones!.first.value!
+                          : 'No phone number',
+                    ),
+                    Text(
+                      'Email: ${contact.emails?.isNotEmpty == true ? contact.emails!.first.value! : 'No email'}',
+                    ),
+                  ],
+                ),
+                onTap: () {
+                  // Handle onTap event if needed
+                },
+              );
+            },
+          )
+        : const Center(
+            child: CircularProgressIndicator(),
+          ),
+  );
+}
