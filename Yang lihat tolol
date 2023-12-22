@@ -1,6 +1,3 @@
-Berikut adalah versi lengkap kode Flutter dengan penambahan fitur pembelian yang dapat menonaktifkan iklan:
-
-```dart
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -85,7 +82,7 @@ class _Screen1State extends State<Screen1> {
                 onPressed: () {
                   _disableAds();
                 },
-                child: Text("Beli untuk Nonaktifkan Iklan"),
+                child: Text("Stop Iklan"),
               ),
             ),
             Expanded(
@@ -168,16 +165,20 @@ class _Screen1State extends State<Screen1> {
     if (!_isAdDisabled && _isInterstitialReady) {
       _interstitialAd.show();
     } else {
-      print("ca-app-pub-3940256099942544/1033173712");
+      print("Iklan dinonaktifkan atau tidak siap.");
     }
   }
 
   void _showRewardedAd() {
-    _rewardedAd.show(onUserEarnedReward: (Ad ad, RewardItem reward) {
-      setState(() {
-        coin += 1;
+    if (!_isAdDisabled && _isRewardedReady) {
+      _rewardedAd.show(onUserEarnedReward: (Ad ad, RewardItem reward) {
+        setState(() {
+          coin += 1;
+        });
       });
-    });
+    } else {
+      print("Iklan dinonaktifkan atau tidak siap.");
+    }
   }
 
   void _disableAds() {
@@ -186,6 +187,3 @@ class _Screen1State extends State<Screen1> {
     });
   }
 }
-```
-
-Pastikan untuk menyesuaikan ID iklan sesuai dengan ID iklan yang sesuai dengan kebutuhan Anda saat menggunakan fitur ini secara nyata.
