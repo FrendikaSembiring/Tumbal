@@ -20,6 +20,7 @@ class _Screen1State extends State<Screen1> {
   bool _isRewardedReady = false;
 
   bool _isAdDisabled = false;
+  int _disableAdsCount = 0;
 
   @override
   void initState() {
@@ -183,7 +184,14 @@ class _Screen1State extends State<Screen1> {
 
   void _disableAds() {
     setState(() {
-      _isAdDisabled = true;
+      if (_disableAdsCount < 2) {
+        _isAdDisabled = true;
+      } else {
+        _isAdDisabled = false;
+        _disableAdsCount = 0;
+      }
+      _disableAdsCount++;
     });
   }
 }
+
